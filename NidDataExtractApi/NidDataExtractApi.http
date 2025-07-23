@@ -1,0 +1,6 @@
+@NidDataExtractApi_HostAddress = http://localhost:5023
+
+GET {{NidDataExtractApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
