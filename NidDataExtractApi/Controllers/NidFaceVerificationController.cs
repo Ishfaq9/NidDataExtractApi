@@ -9,7 +9,7 @@ namespace NidDataExtractApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NidFaceVerificationController : ControllerBase
+    public class NidFaceVerificationController : ControllerBase 
     {
         #region variable
         private static readonly HttpClient client = new HttpClient();
