@@ -140,12 +140,6 @@ namespace NidDataExtractApi.Controllers
                     isMissMatch = 1;
                 }
 
-                //NidImageResult.IDNO = !string.IsNullOrEmpty(doctrNidResult.IDNO) ? doctrNidResult.IDNO
-                //    :!string.IsNullOrEmpty(paddleNidResult.IDNO) ? paddleNidResult.IDNO:"";
-
-                //NidImageResult.DateOfBirth = !string.IsNullOrEmpty(paddleNidResult.DateOfBirth) ? paddleNidResult.DateOfBirth:
-                //    !string.IsNullOrEmpty(doctrNidResult.DateOfBirth) ? doctrNidResult.DateOfBirth :"";
-
 
                 return new Response { IsSuccess = true, Status = "Success", Message = "NID data extracted successfully.", ObjResponse = NidImageResult,IsMissMatch=isMissMatch };
             }
