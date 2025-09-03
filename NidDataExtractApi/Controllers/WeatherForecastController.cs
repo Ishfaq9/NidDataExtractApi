@@ -237,6 +237,37 @@ namespace NidDataExtractApi.Controllers
             }
         }
 
+        [HttpGet("Test")]
+        public ActionResult Test()
+        {
+            var a = "MSTMOHOSINA KHATUN";
+            var b = "MST MOHOSINAKHATUN";
+            if (a.Replace(" ", "") == b.Replace(" ", ""))
+            {
+            
+                if (a.Count(c => c == ' ') > b.Count(c => c == ' '))
+                    return Ok(a);
+                else
+                    return Ok(b);
+            }
+            else
+            {
+                if (a.Length == b.Length)
+                {
+                    if(a=="" && b =="")
+                        return Ok(0);
+                }
+                    
+                else if (a.Length > b.Length)
+                    return Ok(a);
+                else
+                    return Ok(b);
+
+                return Ok(0);
+            }
+
+        }
+
 
         #endregion
 

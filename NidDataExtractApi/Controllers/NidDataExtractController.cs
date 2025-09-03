@@ -205,33 +205,68 @@ namespace NidDataExtractApi.Controllers
                         Name = ""
                     };
                 }
+                
+                int isMissMatch = 0;
 
-                if(paddleNidResult.Name.Replace(" ", "") == doctrNidResult.Name.Replace(" ",""))
+                if (paddleNidResult.Name.Replace(" ", "") == doctrNidResult.Name.Replace(" ", ""))
                 {
-                    if(paddleNidResult.Name.Count(c => c == ' ') > doctrNidResult.Name.Count(c => c == ' '))
-                        NidImageResult.Name = paddleNidResult.Name;
-                    else
+                    if (paddleNidResult.Name == doctrNidResult.Name)
+                    {
                         NidImageResult.Name = doctrNidResult.Name;
+                    }
+                    else
+                    {
+                        NidImageResult.Name = paddleNidResult.Name.Count(c => c == ' ') > doctrNidResult.Name.Count(c => c == ' ')?
+                            paddleNidResult.Name:doctrNidResult.Name;
+                        isMissMatch = 1;
+                    }
+
                 }
                 else
                 {
-                    if(paddleNidResult.Name.Length == doctrNidResult.Name.Length)
+                    if (paddleNidResult.Name.Length == doctrNidResult.Name.Length)
                         NidImageResult.Name = paddleNidResult.Name;
-                    else if (paddleNidResult.Name.Length > doctrNidResult.Name.Length)
-                        NidImageResult.Name = paddleNidResult.Name;
+
                     else
-                        NidImageResult.Name = doctrNidResult.Name;
+                    {
+                        NidImageResult.Name = paddleNidResult.Name.Length > doctrNidResult.Name.Length? paddleNidResult.Name: doctrNidResult.Name;
+                        isMissMatch = 1;
+                    }
 
                 }
 
-                NidImageResult.IDNO = !string.IsNullOrEmpty(doctrNidResult.IDNO)? doctrNidResult.IDNO:
-                    !string.IsNullOrEmpty(paddleNidResult.IDNO) ? paddleNidResult.IDNO : "";
+                //////-----------------------------------
 
-                NidImageResult.DateOfBirth = !string.IsNullOrEmpty(paddleNidResult.DateOfBirth) ? paddleNidResult.DateOfBirth :
-                    !string.IsNullOrEmpty(doctrNidResult.DateOfBirth) ? doctrNidResult.DateOfBirth : "";
+                if (!string.IsNullOrEmpty(doctrNidResult.IDNO) && !string.IsNullOrEmpty(paddleNidResult.IDNO) && doctrNidResult.IDNO == paddleNidResult.IDNO)
+                {
+                    NidImageResult.IDNO = doctrNidResult.IDNO;
+                }
+                else
+                {
+                    NidImageResult.IDNO = !string.IsNullOrEmpty(doctrNidResult.IDNO) ? doctrNidResult.IDNO
+                      : !string.IsNullOrEmpty(paddleNidResult.IDNO) ? paddleNidResult.IDNO : "";
+                    isMissMatch = 1;
+                }
+
+                if (!string.IsNullOrEmpty(doctrNidResult.DateOfBirth) && !string.IsNullOrEmpty(paddleNidResult.DateOfBirth) && doctrNidResult.DateOfBirth == paddleNidResult.DateOfBirth)
+                {
+                    NidImageResult.DateOfBirth = doctrNidResult.DateOfBirth;
+                }
+                else
+                {
+                    NidImageResult.DateOfBirth = !string.IsNullOrEmpty(paddleNidResult.DateOfBirth) ? paddleNidResult.DateOfBirth :
+                        !string.IsNullOrEmpty(doctrNidResult.DateOfBirth) ? doctrNidResult.DateOfBirth : "";
+                    isMissMatch = 1;
+                }
+
+                //NidImageResult.IDNO = !string.IsNullOrEmpty(doctrNidResult.IDNO) ? doctrNidResult.IDNO
+                //    :!string.IsNullOrEmpty(paddleNidResult.IDNO) ? paddleNidResult.IDNO:"";
+
+                //NidImageResult.DateOfBirth = !string.IsNullOrEmpty(paddleNidResult.DateOfBirth) ? paddleNidResult.DateOfBirth:
+                //    !string.IsNullOrEmpty(doctrNidResult.DateOfBirth) ? doctrNidResult.DateOfBirth :"";
 
 
-                return new Response { IsSuccess = true, Status = "Success", Message = "NID data extracted successfully.", ObjResponse = NidImageResult };
+                return new Response { IsSuccess = true, Status = "Success", Message = "NID data extracted successfully.", ObjResponse = NidImageResult,IsMissMatch=isMissMatch };
             }
             catch (Exception ex)
             {
