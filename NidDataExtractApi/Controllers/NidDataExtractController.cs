@@ -23,125 +23,6 @@ namespace NidDataExtractApi.Controllers
 
         #region Event
 
-        //[HttpPost("GetNidData")]
-        //public async Task<ActionResult<Response>> GetNidData([FromBody] string imageBase64)
-        //{
-        //    try
-        //    {
-        //        if (string.IsNullOrEmpty(imageBase64))
-        //            return new Response { IsSuccess = false, Status = "Failed", Message = "Invalid Image Data" };
-
-        //        byte[] imageBytes = Convert.FromBase64String(imageBase64);
-
-        //        string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-        //        Directory.CreateDirectory(uploadsFolder);
-
-        //        string fileName = Guid.NewGuid() + ".jpg";
-        //        string filePath = Path.Combine(uploadsFolder, fileName);
-
-        //        await System.IO.File.WriteAllBytesAsync(filePath, imageBytes);
-
-        //        Response result = await RunOCRWithImagePath(filePath);
-        //        if (!result.IsSuccess)
-        //            return new Response { IsSuccess = false, Status = "Failed", Message = "OCR processing failed." };
-
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Response { IsSuccess = false, Status = "Failed", Message = ex.Message };
-        //    }
-        //}
-
-
-
-        //[HttpPost("GetNidData")]
-        //public async Task<Response> GetNidData([FromBody] string imageBase64)
-        //{
-        //        if (string.IsNullOrEmpty(imageBase64))
-        //            return new Response { IsSuccess = false, Status = "Failed", Message = "Invalid Image Data" };
-
-        //        try
-        //    {
-        //        // Convert file to base64 string
-        //        //using var stream = new MemoryStream();
-        //        //await file.CopyToAsync(stream);
-        //        //var base64String = Convert.ToBase64String(stream.ToArray());
-
-        //        // Send base64 string to Python API
-        //        var content = new StringContent(
-        //            $"{{\"image_base64\": \"{imageBase64}\"}}",
-        //            Encoding.UTF8,
-        //            "application/json"
-        //        );
-
-        //        var response = await client.PostAsync("http://localhost:8000/extract-fields/", content);
-        //        response.EnsureSuccessStatusCode();
-
-        //        var responseString = await response.Content.ReadAsStringAsync();
-        //        if (string.IsNullOrEmpty(responseString))
-        //            return new Response { IsSuccess = false, Status = "Failed", Message = "No response from OCR service." };
-
-        //        // Deserialize the response
-        //        var nidImageResult = JsonConvert.DeserializeObject<NidImageResult>(responseString);
-        //        if (nidImageResult == null)
-        //            return new Response { IsSuccess = false, Status = "Failed", Message = "Failed to parse OCR response." };
-
-        //        return new Response { IsSuccess = true, Status = "Success", Message = "NID data extracted successfully.", ObjResponse = nidImageResult };
-        //            //return Ok(responseString);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return new Response { IsSuccess = false, Status = "Exception", Message = ex.Message };
-
-        //        }
-        //}
-
-
-        //[HttpPost("GetNidData")]
-        //public async Task<Response> GetNidData([FromBody] string imageBase64)
-        //{
-        //    if (string.IsNullOrEmpty(imageBase64))
-        //        return new Response { IsSuccess = false, Status = "Failed", Message = "Invalid Image Data" };
-
-        //    try
-        //    {
-        //        var content = new StringContent(
-        //            $"{{\"image_base64\": \"{imageBase64}\"}}",
-        //            Encoding.UTF8,
-        //            "application/json"
-        //        );
-
-        //        var response = await client.PostAsync("http://localhost:7060/extract-fields/", content);
-
-        //        // Read the response content REGARDLESS of the status code
-        //        var responseString = await response.Content.ReadAsStringAsync();
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            if (string.IsNullOrEmpty(responseString))
-        //                return new Response { IsSuccess = false, Status = "Failed", Message = "No response from OCR service." };
-
-        //            var nidImageResult = JsonConvert.DeserializeObject<NidImageResult>(responseString);
-        //            if (nidImageResult == null)
-        //                return new Response { IsSuccess = false, Status = "Failed", Message = "Failed to parse OCR response." };
-
-        //            return new Response { IsSuccess = true, Status = "Success", Message = "NID data extracted successfully.", ObjResponse = nidImageResult };
-        //        }
-
-        //        else
-        //        {
-        //            var errorResponse = JsonConvert.DeserializeObject<FastAPIErrorResponse>(responseString);
-        //            string errorMessage = errorResponse.detail;
-        //            return new Response { IsSuccess = false, StatusCode = response.StatusCode.ToString(), Status = "Failed", Message = errorMessage };
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Response { IsSuccess = false, Status = "Exception", Message = $"An unexpected error occurred: {ex.Message}" };
-        //    }
-        //}
-
         [HttpPost("GetNidData")]
         public async Task<Response> GetNidData([FromBody] string imageBase64)
         {
@@ -366,6 +247,10 @@ namespace NidDataExtractApi.Controllers
             }
         }
 
+
+        #endregion
+
+        #region  Unused
         private async Task<Response> RunOCRWithImagePath(string imagePath)
         {
             if (string.IsNullOrWhiteSpace(imagePath))
@@ -411,6 +296,125 @@ namespace NidDataExtractApi.Controllers
             }
         }
 
+
+        //[HttpPost("GetNidData")]
+        //public async Task<ActionResult<Response>> GetNidData([FromBody] string imageBase64)
+        //{
+        //    try
+        //    {
+        //        if (string.IsNullOrEmpty(imageBase64))
+        //            return new Response { IsSuccess = false, Status = "Failed", Message = "Invalid Image Data" };
+
+        //        byte[] imageBytes = Convert.FromBase64String(imageBase64);
+
+        //        string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+        //        Directory.CreateDirectory(uploadsFolder);
+
+        //        string fileName = Guid.NewGuid() + ".jpg";
+        //        string filePath = Path.Combine(uploadsFolder, fileName);
+
+        //        await System.IO.File.WriteAllBytesAsync(filePath, imageBytes);
+
+        //        Response result = await RunOCRWithImagePath(filePath);
+        //        if (!result.IsSuccess)
+        //            return new Response { IsSuccess = false, Status = "Failed", Message = "OCR processing failed." };
+
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response { IsSuccess = false, Status = "Failed", Message = ex.Message };
+        //    }
+        //}
+
+
+
+        //[HttpPost("GetNidData")]
+        //public async Task<Response> GetNidData([FromBody] string imageBase64)
+        //{
+        //        if (string.IsNullOrEmpty(imageBase64))
+        //            return new Response { IsSuccess = false, Status = "Failed", Message = "Invalid Image Data" };
+
+        //        try
+        //    {
+        //        // Convert file to base64 string
+        //        //using var stream = new MemoryStream();
+        //        //await file.CopyToAsync(stream);
+        //        //var base64String = Convert.ToBase64String(stream.ToArray());
+
+        //        // Send base64 string to Python API
+        //        var content = new StringContent(
+        //            $"{{\"image_base64\": \"{imageBase64}\"}}",
+        //            Encoding.UTF8,
+        //            "application/json"
+        //        );
+
+        //        var response = await client.PostAsync("http://localhost:8000/extract-fields/", content);
+        //        response.EnsureSuccessStatusCode();
+
+        //        var responseString = await response.Content.ReadAsStringAsync();
+        //        if (string.IsNullOrEmpty(responseString))
+        //            return new Response { IsSuccess = false, Status = "Failed", Message = "No response from OCR service." };
+
+        //        // Deserialize the response
+        //        var nidImageResult = JsonConvert.DeserializeObject<NidImageResult>(responseString);
+        //        if (nidImageResult == null)
+        //            return new Response { IsSuccess = false, Status = "Failed", Message = "Failed to parse OCR response." };
+
+        //        return new Response { IsSuccess = true, Status = "Success", Message = "NID data extracted successfully.", ObjResponse = nidImageResult };
+        //            //return Ok(responseString);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return new Response { IsSuccess = false, Status = "Exception", Message = ex.Message };
+
+        //        }
+        //}
+
+
+        //[HttpPost("GetNidData")]
+        //public async Task<Response> GetNidData([FromBody] string imageBase64)
+        //{
+        //    if (string.IsNullOrEmpty(imageBase64))
+        //        return new Response { IsSuccess = false, Status = "Failed", Message = "Invalid Image Data" };
+
+        //    try
+        //    {
+        //        var content = new StringContent(
+        //            $"{{\"image_base64\": \"{imageBase64}\"}}",
+        //            Encoding.UTF8,
+        //            "application/json"
+        //        );
+
+        //        var response = await client.PostAsync("http://localhost:7060/extract-fields/", content);
+
+        //        // Read the response content REGARDLESS of the status code
+        //        var responseString = await response.Content.ReadAsStringAsync();
+
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            if (string.IsNullOrEmpty(responseString))
+        //                return new Response { IsSuccess = false, Status = "Failed", Message = "No response from OCR service." };
+
+        //            var nidImageResult = JsonConvert.DeserializeObject<NidImageResult>(responseString);
+        //            if (nidImageResult == null)
+        //                return new Response { IsSuccess = false, Status = "Failed", Message = "Failed to parse OCR response." };
+
+        //            return new Response { IsSuccess = true, Status = "Success", Message = "NID data extracted successfully.", ObjResponse = nidImageResult };
+        //        }
+
+        //        else
+        //        {
+        //            var errorResponse = JsonConvert.DeserializeObject<FastAPIErrorResponse>(responseString);
+        //            string errorMessage = errorResponse.detail;
+        //            return new Response { IsSuccess = false, StatusCode = response.StatusCode.ToString(), Status = "Failed", Message = errorMessage };
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response { IsSuccess = false, Status = "Exception", Message = $"An unexpected error occurred: {ex.Message}" };
+        //    }
+        //}
         #endregion
 
 
